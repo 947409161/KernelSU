@@ -62,11 +62,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kyant.capsule.ContinuousRoundedRectangle
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.weishu.kernelsu.Natives
@@ -81,29 +76,22 @@ import me.weishu.kernelsu.ui.theme.isInDarkTheme
 import me.weishu.kernelsu.ui.util.ownerNameForUid
 import me.weishu.kernelsu.ui.util.pickPrimary
 import me.weishu.kernelsu.ui.viewmodel.SuperUserViewModel
-import top.yukonga.miuix.kmp.basic.BasicComponent
-import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.DropdownImpl
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.InfiniteProgressIndicator
-import top.yukonga.miuix.kmp.basic.ListPopupColumn
-import top.yukonga.miuix.kmp.basic.ListPopupDefaults
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
-import top.yukonga.miuix.kmp.basic.PopupPositionProvider
-import top.yukonga.miuix.kmp.basic.PullToRefresh
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.basic.rememberPullToRefreshState
-import top.yukonga.miuix.kmp.extra.SuperListPopup
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.basic.ArrowRight
-import top.yukonga.miuix.kmp.icon.extended.MoreCircle
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.PressFeedbackType
-import top.yukonga.miuix.kmp.utils.overScrollVertical
-import top.yukonga.miuix.kmp.utils.scrollEndHaptic
+import androidx.compose.material3.BasicComponent
+import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownImpl
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.InfiniteProgressIndicator
+import androidx.compose.material3.ListPopupColumn
+import androidx.compose.material3.ListPopupDefaults
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.PopupPositionProvider
+import androidx.compose.material3.PullToRefresh
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberPullToRefreshState
+import androidx.compose.material3.MaterialTheme.colorScheme
 
 @Composable
 fun SuperUserPager(
@@ -136,7 +124,7 @@ fun SuperUserPager(
         viewModel.updateSearchText(searchStatus.searchText)
     }
 
-    val scrollBehavior = MiuixScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val dynamicTopPadding by remember {
         derivedStateOf { 12.dp * (1f - scrollBehavior.state.collapsedFraction) }
     }
@@ -189,7 +177,7 @@ fun SuperUserPager(
                             holdDownState = showTopPopup.value
                         ) {
                             Icon(
-                                imageVector = MiuixIcons.MoreCircle,
+                                imageVector = Icons.MoreCircle,
                                 tint = colorScheme.onSurface,
                                 contentDescription = null
                             )
@@ -577,7 +565,7 @@ private fun GroupItem(
                     }
                     .padding(start = 8.dp)
                     .size(width = 10.dp, height = 16.dp),
-                imageVector = MiuixIcons.Basic.ArrowRight,
+                imageVector = Icons.Basic.ArrowRight,
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(colorScheme.onSurfaceVariantActions),
             )

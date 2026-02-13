@@ -50,11 +50,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.pm.PackageInfoCompat
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.weishu.kernelsu.KernelVersion
@@ -75,23 +70,17 @@ import me.weishu.kernelsu.ui.util.getSuperuserCount
 import me.weishu.kernelsu.ui.util.module.LatestVersionInfo
 import me.weishu.kernelsu.ui.util.reboot
 import me.weishu.kernelsu.ui.util.rootAvailable
-import top.yukonga.miuix.kmp.basic.BasicComponent
-import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.CardDefaults
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.ScrollBehavior
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.extended.Link
-import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.theme.MiuixTheme.isDynamicColor
-import top.yukonga.miuix.kmp.utils.PressFeedbackType
-import top.yukonga.miuix.kmp.utils.overScrollVertical
-import top.yukonga.miuix.kmp.utils.scrollEndHaptic
+import androidx.compose.material3.BasicComponent
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollBehavior
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.isDynamicColor
 
 @Composable
 fun HomePager(
@@ -99,7 +88,7 @@ fun HomePager(
     bottomInnerPadding: Dp
 ) {
     val kernelVersion = getKernelVersion()
-    val scrollBehavior = MiuixScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val hazeState = remember { HazeState() }
     val hazeStyle = HazeStyle(
         backgroundColor = colorScheme.surface,
@@ -539,7 +528,7 @@ fun LearnMoreCard() {
             summary = stringResource(R.string.home_click_to_learn_kernelsu),
             endActions = {
                 Icon(
-                    imageVector = MiuixIcons.Link,
+                    imageVector = Icons.Link,
                     tint = colorScheme.onSurface,
                     contentDescription = null
                 )
@@ -564,7 +553,7 @@ fun DonateCard() {
             summary = stringResource(R.string.home_support_content),
             endActions = {
                 Icon(
-                    imageVector = MiuixIcons.Link,
+                    imageVector = Icons.Link,
                     tint = colorScheme.onSurface,
                     contentDescription = null
                 )
@@ -587,13 +576,13 @@ private fun InfoCard() {
     ) {
         Text(
             text = title,
-            fontSize = MiuixTheme.textStyles.headline1.fontSize,
+            fontSize = MaterialTheme.textStyles.headline1.fontSize,
             fontWeight = FontWeight.Medium,
             color = colorScheme.onSurface
         )
         Text(
             text = content,
-            fontSize = MiuixTheme.textStyles.body2.fontSize,
+            fontSize = MaterialTheme.textStyles.body2.fontSize,
             color = colorScheme.onSurfaceVariantSummary,
             modifier = Modifier.padding(top = 2.dp, bottom = bottomPadding)
         )

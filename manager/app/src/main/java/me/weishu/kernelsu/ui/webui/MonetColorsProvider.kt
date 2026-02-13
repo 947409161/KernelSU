@@ -3,7 +3,6 @@ package me.weishu.kernelsu.ui.webui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
-import top.yukonga.miuix.kmp.theme.MiuixTheme
 import java.util.concurrent.atomic.AtomicReference
 
 /**
@@ -20,7 +19,7 @@ object MonetColorsProvider {
 
     @Composable
     fun UpdateCss() {
-        val colorScheme = MiuixTheme.colorScheme
+        val colorScheme = MaterialTheme.colorScheme
 
         LaunchedEffect(colorScheme) {
             // Generate CSS only when colorScheme changes

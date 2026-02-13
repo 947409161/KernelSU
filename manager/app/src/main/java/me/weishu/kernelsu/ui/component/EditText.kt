@@ -31,9 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
 import kotlin.math.max
 
 @Composable
@@ -78,14 +77,14 @@ fun EditText(
             content = {
                 Text(
                     text = title,
-                    fontSize = MiuixTheme.textStyles.headline1.fontSize,
+                    fontSize = MaterialTheme.textStyles.headline1.fontSize,
                     fontWeight = FontWeight.Medium,
                     color = titleColor.color(enabled)
                 )
                 summary?.let {
                     Text(
                         text = it,
-                        fontSize = MiuixTheme.textStyles.body2.fontSize,
+                        fontSize = MaterialTheme.textStyles.body2.fontSize,
                         color = summaryColor.color(enabled)
                     )
                 }
@@ -103,7 +102,7 @@ fun EditText(
                             }
                         },
                     enabled = enabled,
-                    textStyle = MiuixTheme.textStyles.main.copy(
+                    textStyle = MaterialTheme.textStyles.main.copy(
                         textAlign = TextAlign.End,
                         color = if (isError) {
                             Color.Red.copy(alpha = if (isSystemInDarkTheme()) 0.3f else 0.6f)

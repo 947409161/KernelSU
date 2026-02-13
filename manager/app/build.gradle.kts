@@ -147,6 +147,7 @@ base {
 }
 
 dependencies {
+    // Compose
     implementation(libs.androidx.activity.compose)
 
     implementation(platform(libs.androidx.compose.bom))
@@ -157,37 +158,58 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
+    // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
 
+    // Navigation
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.navigationevent.compose)
 
+    // Libsu
     implementation(libs.com.github.topjohnwu.libsu.core)
     implementation(libs.com.github.topjohnwu.libsu.service)
     implementation(libs.com.github.topjohnwu.libsu.io)
 
-    implementation(libs.dev.rikka.rikkax.parcelablelist)
-
+    // Coroutines
     implementation(libs.kotlinx.coroutines.core)
 
+    // Parcelize
+    implementation(libs.dev.rikka.rikkax.parcelablelist)
+
+    // Markwon
     implementation(libs.markwon)
 
+    // WebKit
     implementation(libs.androidx.webkit)
 
+    // NDK
     implementation(libs.lsposed.cxx)
 
+    // HiddenAPI
     implementation(libs.hiddenapibypass)
 
-    implementation(libs.miuix)
-    implementation(libs.miuix.icons)
-    implementation(libs.miuix.navigation3.ui)
-
+    // OkHttp
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)
 
-    implementation(libs.haze)
-    implementation(libs.capsule)
+    // Material Design 3 (NEW)
+    implementation(libs.androidx.compose.material3.adaptive)
+    implementation(libs.androidx.compose.material3.motion)
+
+    // Accompanist (NEW)
+    implementation(libs.com.google.accompanist.pager)
+    implementation(libs.com.google.accompanist.permissions)
+    implementation(libs.com.google.accompanist.systemuicontroller)
+    implementation(libs.com.google.accompanist.swiperefresh)
+
+    // Image loading (NEW)
+    implementation(libs.com.github.skydoves.landscapist)
+    implementation(libs.io.coil.kt.coil.compose)
+
+    // UI utilities (NEW)
+    implementation(libs.com.valerykp.resimaster.shimmer)
+    implementation(libs.me.sam.c.orchestrate)
 }

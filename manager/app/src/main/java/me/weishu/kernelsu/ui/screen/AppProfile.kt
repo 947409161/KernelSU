@@ -53,11 +53,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.dropUnlessResumed
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
 import me.weishu.kernelsu.Natives
 import me.weishu.kernelsu.R
@@ -78,28 +73,20 @@ import me.weishu.kernelsu.ui.util.restartApp
 import me.weishu.kernelsu.ui.util.setSepolicy
 import me.weishu.kernelsu.ui.viewmodel.SuperUserViewModel
 import me.weishu.kernelsu.ui.viewmodel.getTemplateInfoById
-import top.yukonga.miuix.kmp.basic.BasicComponent
-import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.ListPopupColumn
-import top.yukonga.miuix.kmp.basic.ListPopupDefaults
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
-import top.yukonga.miuix.kmp.basic.PopupPositionProvider
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.ScrollBehavior
-import top.yukonga.miuix.kmp.basic.SmallTitle
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.extra.SuperDropdown
-import top.yukonga.miuix.kmp.extra.SuperListPopup
-import top.yukonga.miuix.kmp.extra.SuperSwitch
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.extended.Back
-import top.yukonga.miuix.kmp.icon.extended.MoreCircle
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.overScrollVertical
-import top.yukonga.miuix.kmp.utils.scrollEndHaptic
+import androidx.compose.material3.BasicComponent
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListPopupColumn
+import androidx.compose.material3.ListPopupDefaults
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.PopupPositionProvider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollBehavior
+import androidx.compose.material3.SmallTitle
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.MaterialTheme.colorScheme
 
 /**
  * @author weishu
@@ -111,7 +98,7 @@ fun AppProfileScreen(
 ) {
     val navigator = LocalNavigator.current
     val context = LocalContext.current
-    val scrollBehavior = MiuixScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val hazeState = remember { HazeState() }
     val hazeStyle = HazeStyle(
         backgroundColor = colorScheme.surface,
@@ -571,7 +558,7 @@ private fun TopBar(
                     modifier = Modifier.graphicsLayer {
                         if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
                     },
-                    imageVector = MiuixIcons.Back,
+                    imageVector = Icons.Back,
                     contentDescription = null,
                     tint = colorScheme.onBackground
                 )
@@ -586,7 +573,7 @@ private fun TopBar(
                     holdDownState = showTopPopup.value
                 ) {
                     Icon(
-                        imageVector = MiuixIcons.MoreCircle,
+                        imageVector = Icons.MoreCircle,
                         tint = colorScheme.onSurface,
                         contentDescription = stringResource(id = R.string.settings)
                     )

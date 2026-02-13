@@ -69,11 +69,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -84,32 +79,24 @@ import me.weishu.kernelsu.ui.navigation3.Navigator
 import me.weishu.kernelsu.ui.navigation3.Route
 import me.weishu.kernelsu.ui.util.isNetworkAvailable
 import me.weishu.kernelsu.ui.viewmodel.TemplateViewModel
-import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
-import top.yukonga.miuix.kmp.basic.HorizontalDivider
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.InfiniteProgressIndicator
-import top.yukonga.miuix.kmp.basic.ListPopupColumn
-import top.yukonga.miuix.kmp.basic.ListPopupDefaults
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
-import top.yukonga.miuix.kmp.basic.PopupPositionProvider
-import top.yukonga.miuix.kmp.basic.PullToRefresh
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.ScrollBehavior
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TextButton
-import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.basic.rememberPullToRefreshState
-import top.yukonga.miuix.kmp.extra.SuperListPopup
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.extended.Back
-import top.yukonga.miuix.kmp.icon.extended.Copy
-import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.PressFeedbackType
-import top.yukonga.miuix.kmp.utils.overScrollVertical
-import top.yukonga.miuix.kmp.utils.scrollEndHaptic
+import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.InfiniteProgressIndicator
+import androidx.compose.material3.ListPopupColumn
+import androidx.compose.material3.ListPopupDefaults
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.PopupPositionProvider
+import androidx.compose.material3.PullToRefresh
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollBehavior
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberPullToRefreshState
+import androidx.compose.material3.MaterialTheme.colorScheme
 
 /**
  * @author weishu
@@ -122,7 +109,7 @@ fun AppProfileTemplateScreen(
     val navigator = LocalNavigator.current
     val viewModel = viewModel<TemplateViewModel>()
     val scope = rememberCoroutineScope()
-    val scrollBehavior = MiuixScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     LaunchedEffect(Unit) {
         if (viewModel.templateList.isEmpty()) {
@@ -376,14 +363,14 @@ private fun TemplateItem(
                         text = "LOCAL",
                         color = colorScheme.onTertiaryContainer,
                         fontWeight = FontWeight(750),
-                        style = MiuixTheme.textStyles.footnote1
+                        style = MaterialTheme.textStyles.footnote1
                     )
                 } else {
                     Text(
                         text = "REMOTE",
                         color = colorScheme.onSurfaceSecondary,
                         fontWeight = FontWeight(750),
-                        style = MiuixTheme.textStyles.footnote1
+                        style = MaterialTheme.textStyles.footnote1
                     )
                 }
             }
@@ -477,7 +464,7 @@ private fun TopBar(
                     modifier = Modifier.graphicsLayer {
                         if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
                     },
-                    imageVector = MiuixIcons.Back,
+                    imageVector = Icons.Back,
                     contentDescription = null,
                     tint = colorScheme.onBackground
                 )
@@ -521,7 +508,7 @@ private fun TopBar(
                 holdDownState = showTopPopup.value
             ) {
                 Icon(
-                    imageVector = MiuixIcons.Copy,
+                    imageVector = Icons.Copy,
                     contentDescription = stringResource(id = R.string.app_profile_import_export),
                     tint = colorScheme.onBackground
                 )

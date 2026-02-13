@@ -35,11 +35,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
 import me.weishu.kernelsu.Natives
 import me.weishu.kernelsu.R
 import me.weishu.kernelsu.ui.component.EditText
@@ -50,20 +45,6 @@ import me.weishu.kernelsu.ui.util.getAppProfileTemplate
 import me.weishu.kernelsu.ui.util.setAppProfileTemplate
 import me.weishu.kernelsu.ui.viewmodel.TemplateViewModel
 import me.weishu.kernelsu.ui.viewmodel.toJSON
-import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.ScrollBehavior
-import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.extended.Back
-import top.yukonga.miuix.kmp.icon.extended.Delete
-import top.yukonga.miuix.kmp.icon.extended.Ok
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.overScrollVertical
-import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 
 /**
  * @author weishu
@@ -82,7 +63,7 @@ fun TemplateEditorScreen(
         mutableStateOf(initialTemplate)
     }
 
-    val scrollBehavior = MiuixScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val hazeState = remember { HazeState() }
     val hazeStyle = HazeStyle(
         backgroundColor = colorScheme.surface,
@@ -321,7 +302,7 @@ private fun TopBar(
                     modifier = Modifier.graphicsLayer {
                         if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
                     },
-                    imageVector = MiuixIcons.Back,
+                    imageVector = Icons.Back,
                     contentDescription = null,
                     tint = colorScheme.onSurface
                 )
@@ -335,7 +316,7 @@ private fun TopBar(
                         onClick = onDelete
                     ) {
                         Icon(
-                            imageVector = MiuixIcons.Delete,
+                            imageVector = Icons.Delete,
                             contentDescription = stringResource(id = R.string.app_profile_template_delete),
                             tint = colorScheme.onBackground
                         )
@@ -348,7 +329,7 @@ private fun TopBar(
                         onClick = onSave
                     ) {
                         Icon(
-                            imageVector = MiuixIcons.Ok,
+                            imageVector = Icons.Ok,
                             contentDescription = stringResource(id = R.string.app_profile_template_save),
                             tint = colorScheme.onBackground
                         )

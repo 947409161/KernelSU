@@ -18,13 +18,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import me.weishu.kernelsu.R
 import me.weishu.kernelsu.ui.component.filter.FilterNumber
-import top.yukonga.miuix.kmp.basic.BasicComponentColors
-import top.yukonga.miuix.kmp.basic.BasicComponentDefaults
-import top.yukonga.miuix.kmp.basic.ButtonDefaults
-import top.yukonga.miuix.kmp.basic.TextButton
-import top.yukonga.miuix.kmp.basic.TextField
-import top.yukonga.miuix.kmp.extra.SuperArrow
-import top.yukonga.miuix.kmp.extra.SuperDialog
+import androidx.compose.material3.BasicComponentColors
+import androidx.compose.material3.BasicComponentDefaults
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 
 @Composable
 fun SuperEditArrow(

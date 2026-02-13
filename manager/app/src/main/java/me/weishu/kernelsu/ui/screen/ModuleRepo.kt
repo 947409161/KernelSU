@@ -73,12 +73,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationBackHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
-import com.kyant.capsule.ContinuousRoundedRectangle
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -101,39 +95,28 @@ import me.weishu.kernelsu.ui.util.isNetworkAvailable
 import me.weishu.kernelsu.ui.util.module.fetchModuleDetail
 import me.weishu.kernelsu.ui.viewmodel.ModuleRepoViewModel
 import me.weishu.kernelsu.ui.viewmodel.ModuleViewModel
-import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.CircularProgressIndicator
-import top.yukonga.miuix.kmp.basic.DropdownImpl
-import top.yukonga.miuix.kmp.basic.HorizontalDivider
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.InfiniteProgressIndicator
-import top.yukonga.miuix.kmp.basic.ListPopupColumn
-import top.yukonga.miuix.kmp.basic.ListPopupDefaults
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
-import top.yukonga.miuix.kmp.basic.PopupPositionProvider
-import top.yukonga.miuix.kmp.basic.PullToRefresh
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.ScrollBehavior
-import top.yukonga.miuix.kmp.basic.SmallTitle
-import top.yukonga.miuix.kmp.basic.TabRow
-import top.yukonga.miuix.kmp.basic.TabRowDefaults
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TextButton
-import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.basic.rememberPullToRefreshState
-import top.yukonga.miuix.kmp.extra.SuperListPopup
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.extended.Back
-import top.yukonga.miuix.kmp.icon.extended.FileDownloads
-import top.yukonga.miuix.kmp.icon.extended.HorizontalSplit
-import top.yukonga.miuix.kmp.icon.extended.Link
-import top.yukonga.miuix.kmp.icon.extended.MoreCircle
-import top.yukonga.miuix.kmp.icon.extended.TopDownloads
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.PressFeedbackType
-import top.yukonga.miuix.kmp.utils.overScrollVertical
-import top.yukonga.miuix.kmp.utils.scrollEndHaptic
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownImpl
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.InfiniteProgressIndicator
+import androidx.compose.material3.ListPopupColumn
+import androidx.compose.material3.ListPopupDefaults
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.PopupPositionProvider
+import androidx.compose.material3.PullToRefresh
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollBehavior
+import androidx.compose.material3.SmallTitle
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberPullToRefreshState
+import androidx.compose.material3.MaterialTheme.colorScheme
 import java.text.Collator
 import java.util.Locale
 
@@ -198,7 +181,7 @@ fun ModuleRepoScreen(
         viewModel.updateSearchText(searchStatus.searchText)
     }
 
-    val scrollBehavior = MiuixScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val dynamicTopPadding by remember {
         derivedStateOf { 12.dp * (1f - scrollBehavior.state.collapsedFraction) }
     }
@@ -245,7 +228,7 @@ fun ModuleRepoScreen(
                             holdDownState = showTopPopup.value
                         ) {
                             Icon(
-                                imageVector = MiuixIcons.MoreCircle,
+                                imageVector = Icons.MoreCircle,
                                 tint = colorScheme.onSurface,
                                 contentDescription = null,
                             )
@@ -262,7 +245,7 @@ fun ModuleRepoScreen(
                                 modifier = Modifier.graphicsLayer {
                                     if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
                                 },
-                                imageVector = MiuixIcons.Back,
+                                imageVector = Icons.Back,
                                 contentDescription = null,
                                 tint = colorScheme.onSurface
                             )
@@ -335,7 +318,7 @@ fun ModuleRepoScreen(
                                     if (module.stargazerCount > 0) {
                                         Row(verticalAlignment = Alignment.CenterVertically) {
                                             Icon(
-                                                imageVector = MiuixIcons.TopDownloads,
+                                                imageVector = Icons.TopDownloads,
                                                 contentDescription = "stars",
                                                 tint = colorScheme.onSurfaceVariantSummary,
                                                 modifier = Modifier.size(16.dp)
@@ -555,7 +538,7 @@ fun ModuleRepoScreen(
                                             if (module.stargazerCount > 0) {
                                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                                     Icon(
-                                                        imageVector = MiuixIcons.TopDownloads,
+                                                        imageVector = Icons.TopDownloads,
                                                         contentDescription = "stars",
                                                         tint = colorScheme.onSurfaceVariantSummary,
                                                         modifier = Modifier.size(16.dp)
@@ -838,7 +821,7 @@ fun ReleasesPage(
                                                 ) {
                                                     Icon(
                                                         modifier = Modifier.size(20.dp),
-                                                        imageVector = MiuixIcons.FileDownloads,
+                                                        imageVector = Icons.FileDownloads,
                                                         tint = actionIconTint,
                                                         contentDescription = stringResource(R.string.install)
                                                     )
@@ -936,7 +919,7 @@ fun InfoPage(
                                 ) {
                                     Icon(
                                         modifier = Modifier.size(20.dp),
-                                        imageVector = MiuixIcons.Link,
+                                        imageVector = Icons.Link,
                                         tint = tint,
                                         contentDescription = null
                                     )
@@ -990,7 +973,7 @@ fun InfoPage(
                         ) {
                             Icon(
                                 modifier = Modifier.size(20.dp),
-                                imageVector = MiuixIcons.Link,
+                                imageVector = Icons.Link,
                                 tint = actionIconTint,
                                 contentDescription = null
                             )
@@ -1030,7 +1013,7 @@ fun ModuleRepoDetailScreen(
     var sourceUrl by remember(module.moduleId) { mutableStateOf("https://github.com/KernelSU-Modules-Repo/${module.moduleId}") }
 
 
-    val scrollBehavior = MiuixScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     val hazeState = remember { HazeState() }
     val hazeStyle = HazeStyle(
@@ -1059,7 +1042,7 @@ fun ModuleRepoDetailScreen(
                             modifier = Modifier.graphicsLayer {
                                 if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
                             },
-                            imageVector = MiuixIcons.Back,
+                            imageVector = Icons.Back,
                             contentDescription = null,
                             tint = colorScheme.onSurface
                         )
@@ -1072,7 +1055,7 @@ fun ModuleRepoDetailScreen(
                             onClick = { uriHandler.openUri(webUrl) }
                         ) {
                             Icon(
-                                imageVector = MiuixIcons.HorizontalSplit,
+                                imageVector = Icons.HorizontalSplit,
                                 contentDescription = null,
                                 tint = colorScheme.onBackground
                             )

@@ -96,11 +96,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kyant.capsule.ContinuousRoundedRectangle
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -130,36 +125,26 @@ import me.weishu.kernelsu.ui.util.undoUninstallModule
 import me.weishu.kernelsu.ui.util.uninstallModule
 import me.weishu.kernelsu.ui.viewmodel.ModuleViewModel
 import me.weishu.kernelsu.ui.webui.WebUIActivity
-import top.yukonga.miuix.kmp.basic.ButtonDefaults
-import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.DropdownImpl
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
-import top.yukonga.miuix.kmp.basic.HorizontalDivider
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.ListPopupColumn
-import top.yukonga.miuix.kmp.basic.ListPopupDefaults
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
-import top.yukonga.miuix.kmp.basic.PopupPositionProvider
-import top.yukonga.miuix.kmp.basic.PullToRefresh
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.Switch
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TextButton
-import top.yukonga.miuix.kmp.basic.TextField
-import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.basic.rememberPullToRefreshState
-import top.yukonga.miuix.kmp.extra.SuperDialog
-import top.yukonga.miuix.kmp.extra.SuperListPopup
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.extended.Delete
-import top.yukonga.miuix.kmp.icon.extended.Download
-import top.yukonga.miuix.kmp.icon.extended.MoreCircle
-import top.yukonga.miuix.kmp.icon.extended.Undo
-import top.yukonga.miuix.kmp.icon.extended.UploadCloud
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.overScrollVertical
-import top.yukonga.miuix.kmp.utils.scrollEndHaptic
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownImpl
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListPopupColumn
+import androidx.compose.material3.ListPopupDefaults
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.PopupPositionProvider
+import androidx.compose.material3.PullToRefresh
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberPullToRefreshState
+import androidx.compose.material3.MaterialTheme.colorScheme
 
 private enum class ShortcutType {
     Action,
@@ -220,7 +205,7 @@ fun ModulePager(
     }
     val hideInstallButton = isSafeMode || magiskInstalled
 
-    val scrollBehavior = MiuixScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var fabVisible by remember { mutableStateOf(true) }
     var scrollDistance by remember { mutableFloatStateOf(0f) }
     val dynamicTopPadding by remember {
@@ -604,7 +589,7 @@ fun ModulePager(
                             holdDownState = showTopPopup.value
                         ) {
                             Icon(
-                                imageVector = MiuixIcons.MoreCircle,
+                                imageVector = Icons.MoreCircle,
                                 tint = colorScheme.onSurface,
                                 contentDescription = null
                             )
@@ -620,7 +605,7 @@ fun ModulePager(
                             onClick = { navigator.push(Route.ModuleRepo) },
                         ) {
                             Icon(
-                                imageVector = MiuixIcons.Download,
+                                imageVector = Icons.Download,
                                 tint = colorScheme.onSurface,
                                 contentDescription = null
                             )
@@ -966,7 +951,7 @@ fun ModulePager(
                             modifier = Modifier.padding(start = 12.dp)
                         ) {
                             Icon(
-                                imageVector = MiuixIcons.Undo,
+                                imageVector = Icons.Undo,
                                 contentDescription = null,
                                 tint = colorScheme.onSurface,
                                 modifier = Modifier.size(28.dp),
@@ -1426,7 +1411,7 @@ fun ModuleItem(
                     ) {
                         Icon(
                             modifier = Modifier.size(20.dp),
-                            imageVector = MiuixIcons.UploadCloud,
+                            imageVector = Icons.UploadCloud,
                             tint = updateTint,
                             contentDescription = stringResource(R.string.module_update),
                         )
@@ -1461,9 +1446,9 @@ fun ModuleItem(
                     Icon(
                         modifier = Modifier.size(20.dp),
                         imageVector = if (module.remove) {
-                            MiuixIcons.Undo
+                            Icons.Undo
                         } else {
-                            MiuixIcons.Delete
+                            Icons.Delete
                         },
                         tint = actionIconTint,
                         contentDescription = null

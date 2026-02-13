@@ -24,12 +24,9 @@ import me.weishu.kernelsu.ui.screen.UninstallType.NONE
 import me.weishu.kernelsu.ui.screen.UninstallType.PERMANENT
 import me.weishu.kernelsu.ui.screen.UninstallType.RESTORE_STOCK_IMAGE
 import me.weishu.kernelsu.ui.screen.UninstallType.TEMPORARY
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TextButton
-import top.yukonga.miuix.kmp.extra.SuperArrow
-import top.yukonga.miuix.kmp.extra.SuperDialog
-import top.yukonga.miuix.kmp.theme.MiuixTheme
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 
 @Composable
 fun UninstallDialog(
@@ -71,10 +68,10 @@ fun UninstallDialog(
                     .fillMaxWidth()
                     .padding(top = 24.dp, bottom = 12.dp),
                 text = stringResource(R.string.uninstall),
-                fontSize = MiuixTheme.textStyles.title4.fontSize,
+                fontSize = MaterialTheme.textStyles.title4.fontSize,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center,
-                color = MiuixTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface
             )
             options.forEach { type ->
                 SuperArrow(
@@ -88,7 +85,7 @@ fun UninstallDialog(
                             imageVector = type.icon,
                             contentDescription = null,
                             modifier = Modifier.padding(end = 16.dp),
-                            tint = MiuixTheme.colorScheme.onSurface
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     },
                     insideMargin = PaddingValues(horizontal = 24.dp, vertical = 12.dp)

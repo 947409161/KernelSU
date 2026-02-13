@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Write",
+      "Bash(cd:*)",
+      "Bash(./gradlew:*)"
+    ]
+  },
+  "enabledPlugins": {
+    "everything-claude-code@everything-claude-code": true
+  }
+}

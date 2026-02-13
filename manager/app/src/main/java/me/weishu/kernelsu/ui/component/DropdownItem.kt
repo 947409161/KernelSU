@@ -10,10 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import top.yukonga.miuix.kmp.basic.DropdownColors
-import top.yukonga.miuix.kmp.basic.DropdownDefaults
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.theme.MiuixTheme
+import androidx.compose.material3.DropdownColors
+import androidx.compose.material3.DropdownDefaults
+import androidx.compose.material3.Text
 
 @Composable
 fun DropdownItem(
@@ -40,7 +39,7 @@ fun DropdownItem(
     ) {
         Text(
             text = text,
-            fontSize = MiuixTheme.textStyles.body1.fontSize,
+            fontSize = MaterialTheme.textStyles.body1.fontSize,
             fontWeight = FontWeight.Medium,
             color = dropdownColors.contentColor,
         )

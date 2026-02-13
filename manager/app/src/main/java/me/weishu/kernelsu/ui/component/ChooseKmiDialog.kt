@@ -24,11 +24,8 @@ import androidx.compose.ui.unit.dp
 import me.weishu.kernelsu.R
 import me.weishu.kernelsu.ui.util.getCurrentKmi
 import me.weishu.kernelsu.ui.util.getSupportedKmis
-import top.yukonga.miuix.kmp.basic.ButtonDefaults
-import top.yukonga.miuix.kmp.basic.TextButton
-import top.yukonga.miuix.kmp.extra.CheckboxLocation
-import top.yukonga.miuix.kmp.extra.SuperCheckbox
-import top.yukonga.miuix.kmp.extra.SuperDialog
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.TextButton
 
 @Composable
 fun ChooseKmiDialog(

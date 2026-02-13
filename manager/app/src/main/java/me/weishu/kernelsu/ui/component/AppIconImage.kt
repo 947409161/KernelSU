@@ -18,10 +18,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
-import com.kyant.capsule.ContinuousRoundedRectangle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
 
 @Composable
 fun AppIconImage(

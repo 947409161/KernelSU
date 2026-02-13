@@ -39,33 +39,23 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.dropUnlessResumed
-import com.kyant.capsule.ContinuousRoundedRectangle
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
 import me.weishu.kernelsu.BuildConfig
 import me.weishu.kernelsu.R
 import me.weishu.kernelsu.ui.navigation3.LocalNavigator
-import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.extra.SuperArrow
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.extended.Back
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.overScrollVertical
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.MaterialTheme.colorScheme
 
 @Composable
 fun AboutScreen() {
     val navigator = LocalNavigator.current
     val uriHandler = LocalUriHandler.current
-    val scrollBehavior = MiuixScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val hazeState = remember { HazeState() }
     val hazeStyle = HazeStyle(
         backgroundColor = colorScheme.surface,
@@ -99,7 +89,7 @@ fun AboutScreen() {
                             modifier = Modifier.graphicsLayer {
                                 if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
                             },
-                            imageVector = MiuixIcons.Back,
+                            imageVector = Icons.Back,
                             contentDescription = null,
                             tint = colorScheme.onBackground
                         )

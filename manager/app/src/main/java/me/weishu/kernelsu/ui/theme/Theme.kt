@@ -1,14 +1,21 @@
 package me.weishu.kernelsu.ui.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import me.weishu.kernelsu.ui.webui.MonetColorsProvider.UpdateCss
-import top.yukonga.miuix.kmp.theme.ColorSchemeMode
-import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.theme.ThemeController
 
+/**
+ * KernelSU Material 3 Theme
+ * Replaces MiuixTheme with standard Material 3 implementation
+ */
 @Composable
 fun KernelSUTheme(
     colorMode: Int = 0,
@@ -16,29 +23,23 @@ fun KernelSUTheme(
     content: @Composable () -> Unit
 ) {
     val isDark = isSystemInDarkTheme()
-    val controller = when (colorMode) {
-        1 -> ThemeController(ColorSchemeMode.Light)
-        2 -> ThemeController(ColorSchemeMode.Dark)
-        3 -> ThemeController(
-            ColorSchemeMode.MonetSystem,
-            keyColor = keyColor,
-            isDark = isDark
-        )
+    val context = LocalContext.current
 
-        4 -> ThemeController(
-            ColorSchemeMode.MonetLight,
-            keyColor = keyColor,
-        )
-
-        5 -> ThemeController(
-            ColorSchemeMode.MonetDark,
-            keyColor = keyColor,
-        )
-
-        else -> ThemeController(ColorSchemeMode.System)
+    // Material You 动态配色 (Android 12+)
+    val colorScheme = when {
+        keyColor != null && Build.VERSION.SDK_INT >= 31 -> {
+            if (isDark) {
+                dynamicDarkColorScheme(context)
+            } else {
+                dynamicLightColorScheme(context)
+            }
+        }
+        isDark -> darkColorScheme()
+        else -> lightColorScheme()
     }
-    return MiuixTheme(
-        controller = controller,
+
+    MaterialTheme(
+        colorScheme = colorScheme,
         content = {
             UpdateCss()
             content()
@@ -46,12 +47,16 @@ fun KernelSUTheme(
     )
 }
 
+/**
+ * 检查是否为深色主题
+ * @param themeMode 主题模式 (0=跟随系统, 1=浅色, 2=深色, 3=跟随系统+自定义色, 4=浅色+自定义色, 5=深色+自定义色)
+ */
 @Composable
 @ReadOnlyComposable
 fun isInDarkTheme(themeMode: Int): Boolean {
     return when (themeMode) {
-        1, 4 -> false  // Force light mode
-        2, 5 -> true   // Force dark mode
-        else -> isSystemInDarkTheme()  // Follow system (0 or default)
+        1, 4 -> false  // 强制浅色
+        2, 5 -> true   // 强制深色
+        else -> isSystemInDarkTheme()  // 跟随系统 (0 或默认)
     }
 }

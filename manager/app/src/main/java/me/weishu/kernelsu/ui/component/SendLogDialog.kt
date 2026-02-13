@@ -28,13 +28,10 @@ import kotlinx.coroutines.withContext
 import me.weishu.kernelsu.BuildConfig
 import me.weishu.kernelsu.R
 import me.weishu.kernelsu.ui.util.getBugreportFile
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TextButton
-import top.yukonga.miuix.kmp.extra.SuperArrow
-import top.yukonga.miuix.kmp.extra.SuperDialog
-import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.MaterialTheme.colorScheme
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -74,7 +71,7 @@ fun SendLogDialog(
                     .fillMaxWidth()
                     .padding(top = 24.dp, bottom = 12.dp),
                 text = stringResource(R.string.send_log),
-                fontSize = MiuixTheme.textStyles.title4.fontSize,
+                fontSize = MaterialTheme.textStyles.title4.fontSize,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center,
                 color = colorScheme.onSurface

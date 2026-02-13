@@ -67,17 +67,10 @@ import androidx.compose.ui.zIndex
 import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationBackHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.hazeEffect
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.InputField
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.basic.Search
-import top.yukonga.miuix.kmp.icon.basic.SearchCleanup
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.overScrollVertical
+import androidx.compose.material3.Icon
+import androidx.compose.material3.InputField
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
 
 // Search Status Class
 @Stable
@@ -341,7 +334,7 @@ fun SearchBar(
         label = "",
         leadingIcon = {
             Icon(
-                imageVector = MiuixIcons.Basic.Search,
+                imageVector = Icons.Basic.Search,
                 contentDescription = "back",
                 modifier = Modifier
                     .size(44.dp)
@@ -356,7 +349,7 @@ fun SearchBar(
                 exit = fadeOut() + scaleOut(),
             ) {
                 Icon(
-                    imageVector = MiuixIcons.Basic.SearchCleanup,
+                    imageVector = Icons.Basic.SearchCleanup,
                     tint = colorScheme.onSurface,
                     contentDescription = "Clean",
                     modifier = Modifier
@@ -403,7 +396,7 @@ fun SearchBarFake(
         label = label,
         leadingIcon = {
             Icon(
-                imageVector = MiuixIcons.Basic.Search,
+                imageVector = Icons.Basic.Search,
                 contentDescription = "Clean",
                 modifier = Modifier
                     .size(44.dp)

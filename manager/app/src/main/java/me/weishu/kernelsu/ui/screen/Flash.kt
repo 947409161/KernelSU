@@ -60,17 +60,13 @@ import me.weishu.kernelsu.ui.util.installBoot
 import me.weishu.kernelsu.ui.util.reboot
 import me.weishu.kernelsu.ui.util.restoreBoot
 import me.weishu.kernelsu.ui.util.uninstallPermanently
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.SmallTopAppBar
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.extended.Back
-import top.yukonga.miuix.kmp.icon.extended.Share
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.scrollEndHaptic
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -304,7 +300,7 @@ private fun TopBar(
                     modifier = Modifier.graphicsLayer {
                         if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
                     },
-                    imageVector = MiuixIcons.Back,
+                    imageVector = Icons.Back,
                     contentDescription = null,
                     tint = colorScheme.onBackground
                 )
@@ -316,7 +312,7 @@ private fun TopBar(
                 onClick = onSave
             ) {
                 Icon(
-                    imageVector = MiuixIcons.Share,
+                    imageVector = Icons.Share,
                     contentDescription = stringResource(id = R.string.save_log),
                     tint = colorScheme.onBackground
                 )

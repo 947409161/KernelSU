@@ -41,10 +41,6 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationBackHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.weishu.kernelsu.Natives
 import me.weishu.kernelsu.R
@@ -75,8 +71,6 @@ import me.weishu.kernelsu.ui.theme.KernelSUTheme
 import me.weishu.kernelsu.ui.util.getFileName
 import me.weishu.kernelsu.ui.util.install
 import me.weishu.kernelsu.ui.webui.WebUIActivity
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -215,8 +209,8 @@ fun MainScreen() {
     var userScrollEnabled by remember(isFullFeatured) { mutableStateOf(isFullFeatured) }
     val hazeState = remember { HazeState() }
     val hazeStyle = HazeStyle(
-        backgroundColor = MiuixTheme.colorScheme.surface,
-        tint = HazeTint(MiuixTheme.colorScheme.surface.copy(0.8f))
+        backgroundColor = MaterialTheme.colorScheme.surface,
+        tint = HazeTint(MaterialTheme.colorScheme.surface.copy(0.8f))
     )
 
     LaunchedEffect(mainPagerState.pagerState.currentPage) {

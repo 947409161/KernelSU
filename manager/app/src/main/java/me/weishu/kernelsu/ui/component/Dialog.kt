@@ -41,12 +41,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.parcelize.Parcelize
 import me.weishu.kernelsu.R
-import top.yukonga.miuix.kmp.basic.ButtonDefaults
-import top.yukonga.miuix.kmp.basic.InfiniteProgressIndicator
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.basic.TextButton
-import top.yukonga.miuix.kmp.extra.SuperDialog
-import top.yukonga.miuix.kmp.theme.MiuixTheme
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.InfiniteProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import kotlin.coroutines.resume
 
 private const val TAG = "DialogComponent"
@@ -390,7 +388,7 @@ private fun LoadingDialog(showDialog: MutableState<Boolean>) {
                     horizontalArrangement = Arrangement.Start,
                 ) {
                     InfiniteProgressIndicator(
-                        color = MiuixTheme.colorScheme.onBackground
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                     Text(
                         modifier = Modifier.padding(start = 12.dp),

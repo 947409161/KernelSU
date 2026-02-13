@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import me.weishu.kernelsu.ui.theme.KernelSUTheme
-import top.yukonga.miuix.kmp.basic.InfiniteProgressIndicator
 
 @SuppressLint("SetJavaScriptEnabled")
 class WebUIActivity : ComponentActivity() {

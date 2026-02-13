@@ -41,11 +41,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.dropUnlessResumed
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,16 +49,6 @@ import me.weishu.kernelsu.ui.component.KeyEventBlocker
 import me.weishu.kernelsu.ui.navigation3.LocalNavigator
 import me.weishu.kernelsu.ui.util.runModuleAction
 import me.weishu.kernelsu.ui.viewmodel.ModuleViewModel
-import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.SmallTopAppBar
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.extended.Back
-import top.yukonga.miuix.kmp.icon.extended.Download
-import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
-import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -237,7 +222,7 @@ private fun TopBar(
                     modifier = Modifier.graphicsLayer {
                         if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
                     },
-                    imageVector = MiuixIcons.Back,
+                    imageVector = Icons.Back,
                     contentDescription = null,
                     tint = colorScheme.onBackground
                 )
@@ -249,7 +234,7 @@ private fun TopBar(
                 onClick = onSave
             ) {
                 Icon(
-                    imageVector = MiuixIcons.Download,
+                    imageVector = Icons.Download,
                     contentDescription = stringResource(id = R.string.save_log),
                     tint = colorScheme.onBackground
                 )

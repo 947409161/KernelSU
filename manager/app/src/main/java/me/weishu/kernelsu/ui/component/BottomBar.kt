@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Cottage
 import androidx.compose.material.icons.rounded.Extension
@@ -45,28 +44,27 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.hazeEffect
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import me.weishu.kernelsu.Natives
 import me.weishu.kernelsu.R
 import me.weishu.kernelsu.ui.LocalMainPagerState
 import me.weishu.kernelsu.ui.util.rootAvailable
-import top.yukonga.miuix.kmp.basic.HorizontalDivider
-import top.yukonga.miuix.kmp.basic.NavigationItem
-import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.theme.MiuixTheme
+// Removed: import dev.chrisbanes.haze.*
+// Added: Material 3 imports
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import kotlin.math.abs
 
 @Composable
-fun BottomBar(hazeState: HazeState, hazeStyle: HazeStyle) {
+fun BottomBar() {
     val isManager = Natives.isManager
     val fullFeatured = isManager && !Natives.requireNewKernel() && rootAvailable()
 
@@ -74,7 +72,7 @@ fun BottomBar(hazeState: HazeState, hazeStyle: HazeStyle) {
 
     if (!fullFeatured) return
 
-    val item = BottomBarDestination.entries.map { destination ->
+    val items = BottomBarDestination.entries.map { destination ->
         NavigationItem(
             label = stringResource(destination.label),
             icon = destination.icon,
@@ -82,19 +80,38 @@ fun BottomBar(hazeState: HazeState, hazeStyle: HazeStyle) {
     }
 
     NavigationBar(
-        modifier = Modifier
-            .hazeEffect(hazeState) {
-                style = hazeStyle
-                blurRadius = 30.dp
-                noiseFactor = 0f
-            },
-        color = Color.Transparent,
-        items = item,
-        selected = mainState.selectedPage,
-        onClick = { targetIndex ->
-            mainState.animateToPage(targetIndex)
+        modifier = Modifier,
+        containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f), // Replaced Haze blur with semi-transparent background
+        tonalElevation = 3.dp
+    ) {
+        items.forEachIndexed { index, destination ->
+            NavigationBarItem(
+                selected = mainState.selectedPage == index,
+                onClick = {
+                    mainState.animateToPage(index)
+                },
+                icon = {
+                    Icon(
+                        imageVector = destination.icon,
+                        contentDescription = stringResource(destination.label),
+                        tint = if (mainState.selectedPage == index) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        }
+                    )
+                },
+                label = {
+                    Text(
+                        text = stringResource(destination.label),
+                        fontSize = 12.sp,
+                        fontWeight = if (mainState.selectedPage == index) FontWeight.Bold else FontWeight.Normal
+                    )
+                },
+                alwaysShowLabel = false
+            )
         }
-    )
+    }
 }
 
 @Composable
@@ -103,76 +120,76 @@ fun NavigationBar(
     selected: Int,
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    color: Color = MiuixTheme.colorScheme.surface,
+    color: Color = MaterialTheme.colorScheme.surface,
     showDivider: Boolean = true,
     defaultWindowInsetsPadding: Boolean = true,
 ) {
-    require(items.size in 2..5) { "BottomBar must have between 2 and 5 items" }
+    require(items.size in 2..5) { "NavigationBar must have between 2 and 5 items" }
 
     val captionBarPaddings = WindowInsets.captionBar.only(WindowInsetsSides.Bottom).asPaddingValues()
     val captionBarBottomPaddingValue = captionBarPaddings.calculateBottomPadding()
-
     val animatedCaptionBarHeight by animateDpAsState(
         targetValue = if (captionBarBottomPaddingValue > 0.dp) captionBarBottomPaddingValue else 0.dp,
         animationSpec = tween(durationMillis = 300),
     )
 
     val currentOnClick by rememberUpdatedState(onClick)
+
+    val isNavigating by remember { mutableStateOf(false) }
+    val navJob = rememberCoroutineScope()
+
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(color),
+            .background(color)
     ) {
         if (showDivider) {
             HorizontalDivider(
                 thickness = 0.6.dp,
-                color = MiuixTheme.colorScheme.dividerLine.copy(0.8f)
             )
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            val itemHeight = 64.dp
-            val itemWeight = 1f / items.size
 
+        val itemHeight = 56.dp
+        val itemWeight = 1f / items.size
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(itemHeight),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             items.forEachIndexed { index, item ->
                 val isSelected = selected == index
                 var isPressed by remember { mutableStateOf(false) }
 
-                val onSurfaceContainerColor = MiuixTheme.colorScheme.onSurfaceContainer
-                val onSurfaceContainerVariantColor = MiuixTheme.colorScheme.onSurfaceContainerVariant
+                val onSurfaceContainerColor = MaterialTheme.colorScheme.onSurfaceContainer
+                val onSurfaceContainerVariantColor = MaterialTheme.colorScheme.onSurfaceContainerVariant
+                val onSurfaceVariantColor = MaterialTheme.colorScheme.onSurfaceVariant
 
                 val tint = when {
-                    isPressed -> if (isSelected) {
-                        onSurfaceContainerColor.copy(alpha = 0.5f)
-                    } else {
-                        onSurfaceContainerVariantColor.copy(alpha = 0.5f)
-                    }
-
                     isSelected -> onSurfaceContainerColor
-
-                    else -> onSurfaceContainerVariantColor
+                    isPressed -> onSurfaceContainerVariantColor
+                    else -> onSurfaceVariantColor
                 }
-                val fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
 
                 Column(
                     modifier = Modifier
-                        .height(itemHeight)
                         .weight(itemWeight)
-                        .pointerInput(index) {
+                        .height(itemHeight)
+                        .pointerInput(Unit) {
                             detectTapGestures(
                                 onPress = {
                                     isPressed = true
                                     tryAwaitRelease()
-                                    isPressed = false
                                 },
-                                onTap = { currentOnClick(index) },
+                                onTap = {
+                                    currentOnClick(index)
+                                },
                             )
                         },
-                    horizontalAlignment = CenterHorizontally,
-                    verticalArrangement = Arrangement.Top,
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
                         modifier = Modifier
@@ -182,28 +199,36 @@ fun NavigationBar(
                         contentDescription = item.label,
                         colorFilter = ColorFilter.tint(tint),
                     )
+
                     Text(
                         modifier = Modifier.padding(top = 1.dp, bottom = 8.dp),
                         text = item.label,
                         color = tint,
-                        textAlign = TextAlign.Center,
                         fontSize = 12.sp,
-                        fontWeight = fontWeight,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                     )
                 }
             }
         }
+
         if (defaultWindowInsetsPadding) {
             val navigationBarsPadding = WindowInsets.navigationBars.asPaddingValues()
+            val paddingValue = navigationBarsPadding.calculateBottomPadding()
+
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(navigationBarsPadding.calculateBottomPadding() + animatedCaptionBarHeight)
-                    .pointerInput(Unit) { detectTapGestures { /* Do nothing to consume the click */ } },
+                    .height(paddingValue + animatedCaptionBarHeight)
+                    .pointerInput(Unit) { /* Do nothing to consume clicks */ }
             )
         }
     }
 }
+
+data class NavigationItem(
+    val label: String,
+    val icon: ImageVector,
+)
 
 enum class BottomBarDestination(
     @get:StringRes val label: Int,
@@ -212,67 +237,5 @@ enum class BottomBarDestination(
     Home(R.string.home, Icons.Rounded.Cottage),
     SuperUser(R.string.superuser, Icons.Rounded.Security),
     Module(R.string.module, Icons.Rounded.Extension),
-    Setting(R.string.settings, Icons.Rounded.Settings)
-}
-
-class MainPagerState(
-    val pagerState: PagerState,
-    private val coroutineScope: CoroutineScope
-) {
-    var selectedPage by mutableIntStateOf(pagerState.currentPage)
-        private set
-
-    var isNavigating by mutableStateOf(false)
-        private set
-
-    private var navJob: Job? = null
-
-    fun animateToPage(targetIndex: Int) {
-        if (targetIndex == selectedPage) return
-
-        navJob?.cancel()
-
-        selectedPage = targetIndex
-        isNavigating = true
-
-        val distance = abs(targetIndex - pagerState.currentPage).coerceAtLeast(2)
-        val duration = 100 * distance + 100
-        val layoutInfo = pagerState.layoutInfo
-        val pageSize = layoutInfo.pageSize + layoutInfo.pageSpacing
-        val currentDistanceInPages = targetIndex - pagerState.currentPage - pagerState.currentPageOffsetFraction
-        val scrollPixels = currentDistanceInPages * pageSize
-
-        navJob = coroutineScope.launch {
-            val myJob = coroutineContext.job
-            try {
-                pagerState.animateScrollBy(
-                    value = scrollPixels,
-                    animationSpec = tween(easing = EaseInOut, durationMillis = duration)
-                )
-            } finally {
-                if (navJob == myJob) {
-                    isNavigating = false
-                    if (pagerState.currentPage != targetIndex) {
-                        selectedPage = pagerState.currentPage
-                    }
-                }
-            }
-        }
-    }
-
-    fun syncPage() {
-        if (!isNavigating && selectedPage != pagerState.currentPage) {
-            selectedPage = pagerState.currentPage
-        }
-    }
-}
-
-@Composable
-fun rememberMainPagerState(
-    pagerState: PagerState,
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
-): MainPagerState {
-    return remember(pagerState, coroutineScope) {
-        MainPagerState(pagerState, coroutineScope)
-    }
+    Settings(R.string.settings, Icons.Rounded.Settings),
 }
