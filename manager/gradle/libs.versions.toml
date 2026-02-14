@@ -82,7 +82,7 @@ com-github-topjohnwu-libsu-io = { group = "com.github.topjohnwu.libsu", name = "
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 
 # Parcelable
-dev-rikka-rikka-parcelablelist = { module = "dev.rikka.rikka:parcelablelist:parcelablelist", version.ref = "parcelablelist" }
+dev-rikka-rikka-parcelablelist = { module = "dev.rikka.rikka:parcelablelist", version.ref = "parcelablelist" }
 
 # Markwon
 markwon = { group = "io.noties.markwon", name = "core", version.ref = "markwon" }
