@@ -1,0 +1,99 @@
+name: Build Manager
+
+on:
+  push:
+    branches: [ "main", "dev", "ci" ]
+    paths:
+      - '.github/workflows/build-manager-updated.yml'
+      - '.github/workflows/build-lkm.yml'
+      - 'manager/**'
+      - 'kernel/**'
+      - 'userspace/**'
+  pull_request:
+    branches: [ "main", "dev" ]
+    paths:
+      - '.github/workflows/build-manager-updated.yml'
+      - '.github/workflows/build-lkm.yml'
+      - 'manager/**'
+      - 'kernel/**'
+      - 'userspace/**'
+    workflow_call:
+    secrets: inherit
+
+jobs:
+  build-lkm:
+    uses: ./.github/workflows/build-lkm.yml
+    secrets: inherit
+
+  build-ksuinit:
+    uses: ./.github/workflows/ksuinit.yml
+    needs: build-lkm
+    secrets: inherit
+
+  build-ksud:
+    needs: [build-lkm, build-ksuinit]
+    strategy:
+      matrix:
+        include:
+          - target: aarch64-linux-android
+            os: ubuntu-latest
+          - target: x86_64-linux-android
+            os: ubuntu-latest
+    uses: ./.github/workflows/ksud.yml
+    with:
+      target: ${{ matrix.target }}
+      os: ${{ matrix.os }}
+
+  build-ksud-extra:
+    needs: [build-lkm, build-ksuinit]
+    strategy:
+      matrix:
+        include:
+          - target: x86_64-pc-windows
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin
+            os: macos-latest
+          - target: aarch64-linux-musl
+            os: ubuntu-latest
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+    uses: ./.github/workflows/ksud.yml
+    with:
+      target: ${{ matrix.target }}
+      os: ${{ matrix.os }}
+
+  build-manager:
+    needs: build-ksud
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./manager
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle properties for Maven Central
+        run: |
+          echo "org.gradle.internal.http.socketTimeout=600000" >> gradle.properties
+          echo "org.gradle.internal.http.connectionTimeout=600000" >> gradle.properties
+
+      - name: Make Gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean assembleRelease --warning-mode all
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        if: ${{ ( github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' )) || github.ref_type == 'tag' }}
+        with:
+          name: manager
+          path: manager/app/build/outputs/apk/release/*.apk
