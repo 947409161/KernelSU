@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.agp.app)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.lsplugin.apksign)
+    alias(libs.plugins.lsplugin.apksigner)
     id("kotlin-parcelize")
 }
 
