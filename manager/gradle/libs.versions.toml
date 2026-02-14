@@ -15,7 +15,7 @@ ndk = "29.0.14206865"
 markwon = "4.6.2"
 webkit = "1.15.0"
 libsu = "6.0.0"
-apksigner = "1.4"
+apksigner = "1.5.0"
 okhttp = "5.3.2"
 hiddenapibypass = "6.1"
 
@@ -46,7 +46,7 @@ kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
-lsplugin-apksigner = { id = "org.lsposed.lsplugin.apksigner", version.ref = "apksigner" }
+lsplugin-apksigner = { id = "com.lsplugin.apksign", version.ref = "apksigner" }
 
 [libraries]
 # Activity
