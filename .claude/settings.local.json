@@ -3,7 +3,7 @@
     "allow": [
       "Write",
       "Bash(cd:*)",
-      "Bash(./gradlew:*)"
+      "Edit"
     ]
   },
   "enabledPlugins": {
