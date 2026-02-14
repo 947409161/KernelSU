@@ -156,10 +156,6 @@ fun AppProfileTemplateScreen(
         targetValue = if (fabVisible) 0.dp else 100.dp + WindowInsets.systemBars.asPaddingValues().calculateBottomPadding(),
         animationSpec = tween(durationMillis = 350)
     )
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = colorScheme.surface,
-        tint = HazeTint(colorScheme.surface.copy(0.8f))
     )
 
     Scaffold(
@@ -207,8 +203,8 @@ fun AppProfileTemplateScreen(
                     }
                 },
                 scrollBehavior = scrollBehavior,
-                hazeState = hazeState,
-                hazeStyle = hazeStyle,
+                
+                
             )
         },
         floatingActionButton = {
@@ -306,7 +302,6 @@ fun AppProfileTemplateScreen(
                     .overScrollVertical()
                     .nestedScroll(nestedScrollConnection)
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
-                    .hazeSource(state = hazeState)
                     .padding(horizontal = 12.dp),
                 contentPadding = innerPadding,
                 overscrollEffect = null
@@ -443,32 +438,10 @@ private fun TopBar(
     onImport: () -> Unit = {},
     onExport: () -> Unit = {},
     scrollBehavior: ScrollBehavior,
-    hazeState: HazeState,
-    hazeStyle: HazeStyle,
+    
+    
 ) {
     TopAppBar(
-        modifier = Modifier.hazeEffect(hazeState) {
-            style = hazeStyle
-            blurRadius = 30.dp
-            noiseFactor = 0f
-        },
-        color = Color.Transparent,
-        title = stringResource(R.string.settings_profile_template),
-        navigationIcon = {
-            IconButton(
-                modifier = Modifier.padding(start = 16.dp),
-                onClick = onBack
-            ) {
-                val layoutDirection = LocalLayoutDirection.current
-                Icon(
-                    modifier = Modifier.graphicsLayer {
-                        if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
-                    },
-                    imageVector = Icons.Back,
-                    contentDescription = null,
-                    tint = colorScheme.onBackground
-                )
-            }
         },
         actions = {
             val showTopPopup = remember { mutableStateOf(false) }

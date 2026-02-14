@@ -207,11 +207,6 @@ fun MainScreen() {
     val isManager = Natives.isManager
     val isFullFeatured = isManager && !Natives.requireNewKernel()
     var userScrollEnabled by remember(isFullFeatured) { mutableStateOf(isFullFeatured) }
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = MaterialTheme.colorScheme.surface,
-        tint = HazeTint(MaterialTheme.colorScheme.surface.copy(0.8f))
-    )
 
     LaunchedEffect(mainPagerState.pagerState.currentPage) {
         mainPagerState.syncPage()
@@ -224,11 +219,11 @@ fun MainScreen() {
     ) {
         Scaffold(
             bottomBar = {
-                BottomBar(hazeState, hazeStyle)
+                BottomBar()
             },
         ) { innerPadding ->
             HorizontalPager(
-                modifier = Modifier.hazeSource(state = hazeState),
+                modifier = Modifier,
                 state = mainPagerState.pagerState,
                 beyondViewportPageCount = 3,
                 userScrollEnabled = userScrollEnabled,

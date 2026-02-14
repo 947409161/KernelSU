@@ -99,10 +99,6 @@ fun AppProfileScreen(
     val navigator = LocalNavigator.current
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = colorScheme.surface,
-        tint = HazeTint(colorScheme.surface.copy(0.8f))
     )
     val scope = rememberCoroutineScope()
     val appInfoState = remember(packageName) {
@@ -146,8 +142,8 @@ fun AppProfileScreen(
                 packageName = packageName,
                 showActions = !isUidGroup,
                 scrollBehavior = scrollBehavior,
-                hazeState = hazeState,
-                hazeStyle = hazeStyle,
+                
+                
             )
         },
         popupHost = { },
@@ -160,7 +156,6 @@ fun AppProfileScreen(
                 .scrollEndHaptic()
                 .overScrollVertical()
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .hazeSource(state = hazeState),
             contentPadding = innerPadding,
             overscrollEffect = null
         ) {
@@ -537,32 +532,10 @@ private fun TopBar(
     packageName: String,
     showActions: Boolean = true,
     scrollBehavior: ScrollBehavior,
-    hazeState: HazeState,
-    hazeStyle: HazeStyle,
+    
+    
 ) {
     TopAppBar(
-        modifier = Modifier.hazeEffect(hazeState) {
-            style = hazeStyle
-            blurRadius = 30.dp
-            noiseFactor = 0f
-        },
-        color = Color.Transparent,
-        title = stringResource(R.string.profile),
-        navigationIcon = {
-            IconButton(
-                modifier = Modifier.padding(start = 16.dp),
-                onClick = onBack
-            ) {
-                val layoutDirection = LocalLayoutDirection.current
-                Icon(
-                    modifier = Modifier.graphicsLayer {
-                        if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
-                    },
-                    imageVector = Icons.Back,
-                    contentDescription = null,
-                    tint = colorScheme.onBackground
-                )
-            }
         },
         actions = {
             if (showActions) {

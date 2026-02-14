@@ -526,15 +526,11 @@ fun ModulePager(
         animationSpec = tween(durationMillis = 350)
     )
 
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = colorScheme.surface,
-        tint = HazeTint(colorScheme.surface.copy(0.8f))
     )
 
     Scaffold(
         topBar = {
-            searchStatus.TopAppBarAnim(hazeState = hazeState, hazeStyle = hazeStyle) {
+            searchStatus.TopAppBarAnim() {
                 TopAppBar(
                     color = Color.Transparent,
                     title = stringResource(R.string.module),
@@ -812,8 +808,8 @@ fun ModulePager(
                         start = innerPadding.calculateStartPadding(layoutDirection),
                         end = innerPadding.calculateEndPadding(layoutDirection)
                     ),
-                    hazeState = hazeState,
-                    hazeStyle = hazeStyle
+                    
+                    
                 ) { boxHeight ->
                     ModuleList(
                         navigator = navigator,
@@ -824,7 +820,6 @@ fun ModulePager(
                             .overScrollVertical()
                             .nestedScroll(scrollBehavior.nestedScrollConnection)
                             .nestedScroll(nestedScrollConnection)
-                            .hazeSource(state = hazeState),
                         scope = scope,
                         modules = modules,
                         onInstallModule = { navigator.push(Route.Flash(FlashIt.FlashModules(listOf(it)))) },

@@ -68,6 +68,8 @@ fun BottomBar() {
     val isManager = Natives.isManager
     val fullFeatured = isManager && !Natives.requireNewKernel() && rootAvailable()
 
+    if (!fullFeatured) return
+
     val mainState = LocalMainPagerState.current
 
     if (!fullFeatured) return

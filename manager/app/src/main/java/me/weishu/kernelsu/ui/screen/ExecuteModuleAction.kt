@@ -66,10 +66,6 @@ fun ExecuteModuleActionScreen(moduleId: String) {
     val scope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
     var actionResult: Boolean
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = colorScheme.surface,
-        tint = HazeTint(colorScheme.surface.copy(0.8f))
     )
 
     val fromShortcut = remember(activity) {
@@ -156,8 +152,8 @@ fun ExecuteModuleActionScreen(moduleId: String) {
                         Toast.makeText(context, "Log saved to ${file.absolutePath}", Toast.LENGTH_SHORT).show()
                     }
                 },
-                hazeState = hazeState,
-                hazeStyle = hazeStyle,
+                
+                
             )
         },
         popupHost = { },
@@ -171,7 +167,6 @@ fun ExecuteModuleActionScreen(moduleId: String) {
             modifier = Modifier
                 .fillMaxSize(1f)
                 .scrollEndHaptic()
-                .hazeSource(state = hazeState)
                 .padding(
                     start = innerPadding.calculateStartPadding(layoutDirection),
                     end = innerPadding.calculateStartPadding(layoutDirection),
@@ -202,31 +197,10 @@ fun ExecuteModuleActionScreen(moduleId: String) {
 private fun TopBar(
     onBack: () -> Unit = {},
     onSave: () -> Unit = {},
-    hazeState: HazeState,
-    hazeStyle: HazeStyle,
+    
+    
 ) {
     SmallTopAppBar(
-        modifier = Modifier.hazeEffect(hazeState) {
-            style = hazeStyle
-            blurRadius = 30.dp
-            noiseFactor = 0f
-        },
-        title = stringResource(R.string.action),
-        navigationIcon = {
-            IconButton(
-                modifier = Modifier.padding(start = 16.dp),
-                onClick = onBack
-            ) {
-                val layoutDirection = LocalLayoutDirection.current
-                Icon(
-                    modifier = Modifier.graphicsLayer {
-                        if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
-                    },
-                    imageVector = Icons.Back,
-                    contentDescription = null,
-                    tint = colorScheme.onBackground
-                )
-            }
         },
         actions = {
             IconButton(

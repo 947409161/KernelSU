@@ -128,15 +128,11 @@ fun SuperUserPager(
     val dynamicTopPadding by remember {
         derivedStateOf { 12.dp * (1f - scrollBehavior.state.collapsedFraction) }
     }
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = colorScheme.surface,
-        tint = HazeTint(colorScheme.surface.copy(0.8f))
     )
 
     Scaffold(
         topBar = {
-            searchStatus.TopAppBarAnim(hazeState = hazeState, hazeStyle = hazeStyle) {
+            searchStatus.TopAppBarAnim() {
                 TopAppBar(
                     color = Color.Transparent,
                     title = stringResource(R.string.superuser),
@@ -262,8 +258,8 @@ fun SuperUserPager(
                 start = innerPadding.calculateStartPadding(layoutDirection),
                 end = innerPadding.calculateEndPadding(layoutDirection)
             ),
-            hazeState = hazeState,
-            hazeStyle = hazeStyle
+            
+            
         ) { boxHeight ->
             var isRefreshing by rememberSaveable { mutableStateOf(false) }
             val pullToRefreshState = rememberPullToRefreshState()
@@ -318,7 +314,6 @@ fun SuperUserPager(
                             .scrollEndHaptic()
                             .overScrollVertical()
                             .nestedScroll(scrollBehavior.nestedScrollConnection)
-                            .hazeSource(state = hazeState),
                         contentPadding = PaddingValues(
                             top = innerPadding.calculateTopPadding() + boxHeight.value + 6.dp,
                             start = innerPadding.calculateStartPadding(layoutDirection),

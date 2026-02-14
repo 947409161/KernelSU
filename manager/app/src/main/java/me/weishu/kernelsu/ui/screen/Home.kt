@@ -89,11 +89,6 @@ fun HomePager(
 ) {
     val kernelVersion = getKernelVersion()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = colorScheme.surface,
-        tint = HazeTint(colorScheme.surface.copy(0.8f))
-    )
 
     val context = LocalContext.current
     val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
@@ -104,8 +99,6 @@ fun HomePager(
         topBar = {
             TopBar(
                 scrollBehavior = scrollBehavior,
-                hazeState = hazeState,
-                hazeStyle = hazeStyle,
             )
         },
         popupHost = { },
@@ -117,8 +110,7 @@ fun HomePager(
                 .scrollEndHaptic()
                 .overScrollVertical()
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .padding(horizontal = 12.dp)
-                .hazeSource(state = hazeState),
+                .padding(horizontal = 12.dp),
             contentPadding = innerPadding,
             overscrollEffect = null,
         ) {
@@ -247,15 +239,8 @@ fun RebootDropdownItem(
 @Composable
 private fun TopBar(
     scrollBehavior: ScrollBehavior,
-    hazeState: HazeState,
-    hazeStyle: HazeStyle,
 ) {
     TopAppBar(
-        modifier = Modifier.hazeEffect(hazeState) {
-            style = hazeStyle
-            blurRadius = 30.dp
-            noiseFactor = 0f
-        },
         color = Color.Transparent,
         title = stringResource(R.string.app_name),
         actions = {

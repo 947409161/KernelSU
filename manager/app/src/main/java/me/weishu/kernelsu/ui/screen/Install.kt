@@ -161,10 +161,6 @@ fun InstallScreen() {
     }
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = colorScheme.surface,
-        tint = HazeTint(colorScheme.surface.copy(0.8f))
     )
 
     Scaffold(
@@ -172,8 +168,8 @@ fun InstallScreen() {
             TopBar(
                 onBack = dropUnlessResumed { navigator.pop() },
                 scrollBehavior = scrollBehavior,
-                hazeState = hazeState,
-                hazeStyle = hazeStyle,
+                
+                
             )
         },
         popupHost = { },
@@ -185,7 +181,6 @@ fun InstallScreen() {
                 .scrollEndHaptic()
                 .overScrollVertical()
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .hazeSource(state = hazeState)
                 .padding(top = 12.dp)
                 .padding(horizontal = 16.dp),
             contentPadding = innerPadding,
@@ -411,32 +406,10 @@ private fun SelectInstallMethod(onSelected: (InstallMethod) -> Unit = {}) {
 private fun TopBar(
     onBack: () -> Unit = {},
     scrollBehavior: ScrollBehavior,
-    hazeState: HazeState,
-    hazeStyle: HazeStyle,
+    
+    
 ) {
     TopAppBar(
-        modifier = Modifier.hazeEffect(hazeState) {
-            style = hazeStyle
-            blurRadius = 30.dp
-            noiseFactor = 0f
-        },
-        color = Color.Transparent,
-        title = stringResource(R.string.install),
-        navigationIcon = {
-            IconButton(
-                modifier = Modifier.padding(start = 16.dp),
-                onClick = onBack
-            ) {
-                val layoutDirection = LocalLayoutDirection.current
-                Icon(
-                    modifier = Modifier.graphicsLayer {
-                        if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
-                    },
-                    imageVector = Icons.Back,
-                    tint = colorScheme.onSurface,
-                    contentDescription = null,
-                )
-            }
         },
         scrollBehavior = scrollBehavior
     )

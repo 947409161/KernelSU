@@ -64,10 +64,6 @@ fun TemplateEditorScreen(
     }
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = colorScheme.surface,
-        tint = HazeTint(colorScheme.surface.copy(0.8f))
     )
 
     Scaffold(
@@ -114,8 +110,8 @@ fun TemplateEditorScreen(
                     }
                 },
                 scrollBehavior = scrollBehavior,
-                hazeState = hazeState,
-                hazeStyle = hazeStyle,
+                
+                
             )
         },
         popupHost = { },
@@ -127,7 +123,6 @@ fun TemplateEditorScreen(
                 .scrollEndHaptic()
                 .overScrollVertical()
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .hazeSource(state = hazeState)
                 .pointerInteropFilter {
                     // disable click and ripple if readOnly
                     readOnly
@@ -281,32 +276,10 @@ private fun TopBar(
     onDelete: () -> Unit = {},
     onSave: () -> Unit = {},
     scrollBehavior: ScrollBehavior,
-    hazeState: HazeState,
-    hazeStyle: HazeStyle,
+    
+    
 ) {
     TopAppBar(
-        modifier = Modifier.hazeEffect(hazeState) {
-            style = hazeStyle
-            blurRadius = 30.dp
-            noiseFactor = 0f
-        },
-        color = Color.Transparent,
-        title = title,
-        navigationIcon = {
-            IconButton(
-                modifier = Modifier.padding(start = 16.dp),
-                onClick = onBack
-            ) {
-                val layoutDirection = LocalLayoutDirection.current
-                Icon(
-                    modifier = Modifier.graphicsLayer {
-                        if (layoutDirection == LayoutDirection.Rtl) scaleX = -1f
-                    },
-                    imageVector = Icons.Back,
-                    contentDescription = null,
-                    tint = colorScheme.onSurface
-                )
-            }
         },
         actions = {
             when {

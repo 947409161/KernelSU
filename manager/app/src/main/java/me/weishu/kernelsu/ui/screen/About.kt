@@ -56,10 +56,6 @@ fun AboutScreen() {
     val navigator = LocalNavigator.current
     val uriHandler = LocalUriHandler.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val hazeState = remember { HazeState() }
-    val hazeStyle = HazeStyle(
-        backgroundColor = colorScheme.surface,
-        tint = HazeTint(colorScheme.surface.copy(0.8f))
     )
 
     val htmlString = stringResource(
@@ -72,17 +68,6 @@ fun AboutScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                modifier = Modifier.hazeEffect(hazeState) {
-                    style = hazeStyle
-                    blurRadius = 30.dp
-                    noiseFactor = 0f
-                },
-                color = Color.Transparent,
-                title = stringResource(R.string.about),
-                navigationIcon = {
-                    IconButton(
-                        modifier = Modifier.padding(start = 16.dp),
-                        onClick = dropUnlessResumed { navigator.pop() }
                     ) {
                         val layoutDirection = LocalLayoutDirection.current
                         Icon(
@@ -106,7 +91,6 @@ fun AboutScreen() {
                 .fillMaxHeight()
                 .overScrollVertical()
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .hazeSource(state = hazeState)
                 .padding(horizontal = 12.dp),
             contentPadding = innerPadding,
             overscrollEffect = null,
