@@ -3,7 +3,6 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'com.lsplugin.apksign'
 
 android {
     namespace 'me.weishu.kernelsu'
@@ -39,6 +38,16 @@ android {
             isShrinkResources true
             vcsInfo.include false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            // 使用 Android 原生签名功能（无需 apksigner 插件）
+            signingConfigs {
+                release {
+                    storeFile file('../keystore.jks')
+                    storePassword System.getenv('STORE_PASSWORD') ?: 'test123'
+                    keyAlias System.getenv('KEY_ALIAS') ?: 'key0'
+                    keyPassword System.getenv('KEY_PASSWORD') ?: 'test123'
+                }
+            }
         }
     }
 
@@ -60,14 +69,6 @@ android {
         abortOnError false
         checkReleaseBuilds false
     }
-}
-
-// apksigner 配置
-apksign {
-    storeFileProperty = "KEYSTORE_FILE"
-    storePasswordProperty = "KEYSTORE_PASSWORD"
-    keyAliasProperty = "KEY_ALIAS"
-    keyPasswordProperty = "KEY_PASSWORD"
 }
 
 dependencies {
@@ -143,7 +144,4 @@ dependencies {
     // UI utilities
     implementation 'com.valerykp.resmaster:shimmer:1.3.0'
     implementation 'me.sam.c:orchestrate:2.0.0'
-
-    // Parcelable (Rikka) - 修复：使用正确坐标
-    implementation 'dev.rikka.rikka:parcelablelist:2.0.1'
 }
